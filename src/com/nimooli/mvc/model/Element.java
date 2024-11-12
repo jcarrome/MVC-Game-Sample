@@ -1,27 +1,38 @@
 package com.nimooli.mvc.model;
 
-public abstract class Element {
+// Interfaz Movable
+public interface Movable {
+    boolean move(DIRECTION dir, Element caller);
+}
 
-    private Cell container;
+// Interfaz GameEndable
+public interface GameEndable {
+    void gameOver();
+}
 
-    public Cell getContainer() {
+// Interfaz Container
+public interface Container {
+    void setElement(Element element);
+    Element getElement();
+}
+
+// Clase Element actualizada
+public abstract class Element implements Movable, GameEndable {
+    private Container container;
+
+    public Container getContainer() {
         return container;
     }
 
-    public void setContainer(Cell c) {
+    public void setContainer(Container c) {
         container = c;
         if (container.getElement() != this) {
             container.setElement(this);
         }
     }
 
-    public abstract boolean move(DIRECTION dir, Element caller);
-
     @Override
     public String toString() {
         return "Element";
-    }
-
-    public void gameOver() {
     }
 }
